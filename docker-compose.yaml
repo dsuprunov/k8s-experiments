@@ -1,0 +1,11 @@
+services:
+  website:
+    build:
+      context: ./services/website
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+    # volumes:
+    #   - ./services/website/src:/app/src
