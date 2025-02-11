@@ -1,0 +1,15 @@
+image:
+  repository: website
+  tag: latest
+  pullPolicy: Never
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: false
+
+env:
+  - name: PORT
+    value: "8080"

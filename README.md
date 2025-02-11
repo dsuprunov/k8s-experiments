@@ -25,3 +25,9 @@ minikube stop
 minikube delete
 
 
+## services // website
+
+docker-compose up --build
+
+docker build -t website:latest services/website/
+
