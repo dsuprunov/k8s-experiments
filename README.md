@@ -25,9 +25,14 @@ minikube stop
 minikube delete
 
 
-## services // website
+## services // website 
+
+kubectl create namespace website
 
 docker-compose up --build
 
-docker build -t website:latest services/website/
+docker build -t dsuprunov/dummy-portal:latest services/website/ --no-cache
 
+docker push dsuprunov/dummy-portal:latest
+
+helm install website services/website/helm/

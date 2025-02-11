@@ -1,10 +1,10 @@
 image:
-  repository: website
+  repository: dsuprunov/dummy-portal
   tag: latest
-  pullPolicy: Never
+  pullPolicy: Always
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 8080
 
 ingress:
