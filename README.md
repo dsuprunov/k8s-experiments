@@ -35,4 +35,10 @@ docker build -t dsuprunov/dummy-portal:latest services/website/ --no-cache
 
 docker push dsuprunov/dummy-portal:latest
 
-helm install website services/website/helm/
+helm template website services/website/helm/ --namespace website
+
+helm upgrade --install website services/website/helm/ --namespace website --create-namespace
+
+kubectl get nodes -o wide
+
+kubectl get services -n website

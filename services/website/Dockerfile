@@ -10,6 +10,6 @@ COPY tests/ tests/
 
 RUN pytest tests/
 
-ENV PORT=8080
+ENV PORT=3000
 
 CMD ["python", "src/app.py"]
