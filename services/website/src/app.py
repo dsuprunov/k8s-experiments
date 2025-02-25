@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, request
 import os
 from datetime import datetime, timezone
 
@@ -8,6 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def root():
     response = make_response(jsonify({
+        'host': request.url,
         'timestamp': datetime.now(timezone.utc).isoformat()
     }))
     
