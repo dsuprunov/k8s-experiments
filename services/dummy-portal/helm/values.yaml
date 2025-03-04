@@ -1,4 +1,4 @@
-name: "website"
+name: dummy-portal
 
 image:
   repository: dsuprunov/dummy-portal
