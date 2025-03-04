@@ -27,8 +27,6 @@ minikube delete
 
 ## services // website 
 
-kubectl create namespace website
-
 docker-compose up --build
 
 docker build -t dsuprunov/dummy-portal:latest services/website/ --no-cache
@@ -42,3 +40,5 @@ helm upgrade --install website services/website/helm/ --namespace website --crea
 kubectl get nodes -o wide
 
 kubectl get services -n website
+
+minikube service website --namespace website --url

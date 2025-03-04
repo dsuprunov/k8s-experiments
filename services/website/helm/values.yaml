@@ -1,5 +1,4 @@
 name: "website"
-namespace: "website"
 
 image:
   repository: dsuprunov/dummy-portal
