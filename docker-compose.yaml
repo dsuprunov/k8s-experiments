@@ -1,11 +1,9 @@
 services:
-  website:
+  dummy-portal:
     build:
-      context: ./services/website
+      context: ./services/dummy-portal
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     environment:
       - PORT=3000
-    # volumes:
-    #   - ./services/website/src:/app/src
