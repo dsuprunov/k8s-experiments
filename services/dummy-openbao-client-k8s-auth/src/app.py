@@ -23,7 +23,7 @@ def root():
         
         client_secrets = client.secrets.kv.v2.read_secret_version(
             path='dummy-openbao-client',
-            mount_point='kv'
+            mount_point='test'
         )        
 
         response = make_response(jsonify({
