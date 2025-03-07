@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy-openbao-client-token-auth
+  namespace: dummy-openbao-client-token-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dummy-openbao-client-token-auth
+  template:
+    metadata:
+      labels:
+        app: dummy-openbao-client-token-auth
+    spec:
+      containers:
+        - name: dummy-openbao-client
+          image: dsuprunov/dummy-openbao-client-token-auth:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: OPENBAO_TOKEN
+              value: "s.fOstXCTloimT2hPUkJ5PRa3a"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dummy-openbao-client-token-auth
+  namespace: dummy-openbao-client-token-auth
+spec:
+  selector:
+    app: dummy-openbao-client-token-auth
+  ports:
+    - port: 80
+      targetPort: 80
+  type: NodePort

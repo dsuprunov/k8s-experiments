@@ -32,12 +32,6 @@ helm repo add openbao https://openbao.github.io/openbao-helm
 
 helm install openbao openbao/openbao --namespace openbao --create-namespace --set "server.ha.enabled=false" # --set "server.dev.enabled=true"
 
-kubectl get namespaces
-
-helm repo add openbao https://openbao.github.io/openbao-helm
-
-helm install openbao openbao/openbao --namespace openbao --set "server.ha.enabled=false"
-
 kubectl get pods -n openbao
 
 # if OpenBao PODs are in Pending mode check for possible issue with PVC/PV claim (no default StorageClass)
@@ -52,8 +46,6 @@ kubectl exec -n openbao openbao-0 -- bao operator unseal $OPENBAO_UNSEAL_KEY
 kubectl exec -n openbao openbao-0 -- bao login $OPENBAO_ROOT_TOKEN
 
 kubectl exec -n openbao openbao-0 -- bao auth enable kubernetes
-
-kubectl apply -f staging-openbao.yaml
 
 kubectl get pods -n openbao
 ```

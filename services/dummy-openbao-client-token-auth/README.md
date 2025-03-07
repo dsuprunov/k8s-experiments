@@ -1,0 +1,29 @@
+```bash
+kubectl exec -n openbao openbao-0 -- bao secrets enable -version=2 -path=test kv
+
+kubectl exec -n openbao openbao-0 -- bao kv put -mount=test dummy-openbao-client key1=value1 key2=value2 key3=value3
+
+kubectl exec -n openbao openbao-0 -- bao kv get -mount=test dummy-openbao-client
+
+cat <<EOF | kubectl exec -n openbao -i openbao-0 -- bao policy write dummy-openbao-client-policy -
+path "test/data/dummy-openbao-client" {
+  capabilities = ["read"]
+}
+EOF
+
+kubectl exec -n openbao -i openbao-0 -- bao policy read dummy-openbao-client-policy
+
+kubectl exec -n openbao openbao-0 -- bao token create --policy dummy-openbao-client-policy
+
+kubectl create namespace dummy-openbao-client-token-auth
+
+docker build -t dsuprunov/dummy-openbao-client-token-auth:latest ./services/dummy-openbao-client-token-auth/ --no-cache
+
+docker push dsuprunov/dummy-openbao-client-token-auth:latest
+
+kubectl apply -f services/dummy-openbao-client-token-auth/k8s/deployment.yaml
+
+kubectl get pods -n dummy-openbao-client-token-auth
+
+kubectl get services -n dummy-openbao-client-token-auth
+```
