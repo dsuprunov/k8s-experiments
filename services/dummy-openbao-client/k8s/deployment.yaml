@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummy-openbao-client
+  namespace: dummy-openbao-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dummy-openbao-client
+  template:
+    metadata:
+      labels:
+        app: dummy-openbao-client
+    spec:
+      serviceAccountName: dummy-openbao-client-serviceaccount
+      containers:
+        - name: dummy-openbao-client
+          image: dsuprunov/dummy-openbao-client:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dummy-openbao-client
+  namespace: dummy-openbao-client
+spec:
+  selector:
+    app: dummy-openbao-client
+  ports:
+    - port: 80
+      targetPort: 80
+  type: NodePort

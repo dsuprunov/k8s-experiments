@@ -6,9 +6,7 @@ import hvac
 
 app = Flask(__name__)
 
-@app.route('/')
-def root():
-    try:
+def by_service_account():
         token_path = '/var/run/secrets/kubernetes.io/serviceaccount/token'
         
         with open(token_path, 'r') as file:
@@ -21,15 +19,37 @@ def root():
             jwt=jwt_token
         )
         
-        client_secrets = client.secrets.kv.v2.read_secret_version(
+        return client.secrets.kv.v2.read_secret_version(
             path='dummy-openbao-client',
-            mount_point='test'
+            mount_point='test',
+            raise_on_deleted_version=False
         )        
 
+
+def by_token(token: str, url: str):
+        assert token, "The 'token' request parameter is missing or empty."
+
+        assert url, "The 'url' request parameter is missing or empty."
+        
+        client = hvac.Client(url=url)
+
+        client.token = token
+        
+        return client.secrets.kv.v2.read_secret_version(
+            path='dummy-openbao-client',
+            mount_point='test',
+            raise_on_deleted_version=False
+        )
+
+
+@app.route('/')
+def root():
+    try:
         response = make_response(jsonify({
             'host': request.url,
             'timestamp': datetime.now(timezone.utc).isoformat(),
-            'secrets': client_secrets,
+            'by_service_account': by_service_account(),
+            'by_token': by_token(token=request.args.get('token'), url=request.args.get('url')),
         }))
         
         response.headers['Content-Type'] = 'application/json'
