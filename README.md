@@ -13,6 +13,11 @@ https://minikube.sigs.k8s.io/docs/start/
 
 https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
 
+```bash
+minikube config set driver docker
+
+minikube config get driver
+```
 
 ## Something general
 
