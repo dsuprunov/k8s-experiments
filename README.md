@@ -21,6 +21,7 @@ minikube config get driver
 
 ## Something general
 
+```bash
 minikube start --driver=docker
 
 minikube status
@@ -28,7 +29,7 @@ minikube status
 minikube stop
 
 minikube delete
-
+```
 
 ### OpenBao General Setup
 
