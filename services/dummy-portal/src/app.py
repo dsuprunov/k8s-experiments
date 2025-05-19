@@ -9,7 +9,8 @@ app = Flask(__name__)
 def root():
     response = make_response(jsonify({
         'host': request.url,
-        'timestamp': datetime.now(timezone.utc).isoformat()
+        'timestamp': datetime.now(timezone.utc).isoformat(),
+        'ip': request.remote_addr,
     }))
     
     response.headers['Content-Type'] = 'application/json'
